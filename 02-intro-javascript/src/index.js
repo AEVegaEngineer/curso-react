@@ -1,11 +1,10 @@
-const nombre = 'Fernando';
-let apellido = 'Vega';
-let valorDado = 5;
-valorDado = 4;
+const nombre = 'Andres';
+const apellido = 'Vega';
+//const nombreCompleto = nombre + ' ' + apellido;
+const nombreCompleto = `${nombre} ${apellido}`;
+console.log(nombreCompleto);
 
-console.log(nombre,apellido,valorDado);
-if (true){
-    console.log("se reescribe la variable valorDado");
-    let valorDado = 6;
-    console.log(valorDado);
+function getSaludo(nombre){
+    return 'Hola '+nombre;
 }
+console.log(`Este es un texto: ${getSaludo('Andres')}`);
