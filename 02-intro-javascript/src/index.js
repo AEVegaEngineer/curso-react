@@ -1,78 +1,62 @@
-//import React from 'react';
-// Funciones en JS
-/*
-function saludar (nombre) {
-    return `Hola, ${nombre}`;
+// Desestructuracion o asignacion desestructurante
+//https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+
+const persona = {
+    nombre: 'Tony',
+    edad:45,
+    clave: 'Ironman',
+    rango: 'Soldado'
 }
-*/
-//console.log(saludar('Goku'))
-//console.log(saludar); // esto retorna una referencia a la funcion
-
-//si ahora  asignamos un valor a saludar
-//saludar = 30;
-//console.log(saludar); // esto retorna el valor, pero hemos pisado la definicion de la funcion, 
-//nos lo dice el warning, pero no nos arroja error
-// por esto se debe evitar declarar funciones de esta manera.
-// para evitar este problema asignamos el valor de la funcion a una constante, esta actuara como referencia
-// y podremos llamar a estas funciones sin peligro de sobreescribirlas
-
-/*
-const saludar2 = function (nombre) {
-    return `Hola, ${nombre}`;
+const persona2 = {
+    nombre: 'Peter',
+    edad:15,
+    clave: 'Spiderman'
 }
-*/
-// si intentamos asignar un valor a esta funcion
-//saludar2 = 30; //nos arroja un error
-//console.log(saludar2('Goku'));
 
-//transformando esta funcion a una funcion de flecha
 /*
-const saludar3 = (nombre) => {
-    return `Hola, ${nombre}`;
+para evitar esto se puede desestructurar el objeto
+console.log(persona.nombre);
+console.log(persona.edad);
+console.log(persona.clave);
+*/
+
+// esto quiere decir, obtener el campo nombre del 
+// objeto persona y asignarlo a la variable nombre
+/*
+const { nombre } = persona;
+console.log(nombre)
+*/
+// si tuviesemos otra variable o quisiesemos renombrar
+// el campo desestructurado se hace de esta manera:
+/*
+const { nombre:nombre2, edad, clave } = persona;
+console.log(nombre2, edad, clave);
+*/
+
+// algo que se usa mucho es la desestructuracion
+// directamente en el argumento de la funcion
+// se pueden establecer valores por defecto si no estan
+// definidos en el objeto
+/*
+const retornaPersona = ( { clave, nombre, rango = 'Capitan'} ) => {
+    console.log(nombre, rango);    
 }
-console.log(saludar3('Vegeta'));
+retornaPersona(persona);
+retornaPersona(persona2);
 */
 
-//resumiendo la funcion anterior
-/*
-const saludar4 = (nombre) => `Hola, ${nombre}`;
-console.log(saludar4('Vegeta'));
-*/
-
-/*
-const getUser = () => {
+//Tarea
+const getPersona = ( { clave, edad, nombre, rango = 'Capitan'} ) => {
     return {
-        uid: 'ABC123',
-        username: 'usuario'
+        nombreClave: clave,
+        anios: edad,
+        latlng: {
+            lat: 14.1232,
+            lng: -12.3232
+        }
     }
 }
-*/
-// esta funcion anterior es lo mismo que escribir
-/*
-const getUser = () => ({
-    uid: 'ABC123',
-    username: 'usuario'
-});
-console.log(getUser());
-*/
+// extraccion de propiedades dentro de objeto anidado
+const { nombreClave, anios, latlng: {lat, lng} } = getPersona(persona);
 
-
-// tarea
-// 1. transformar a funcion de flecha
-// 2. tiene que retornar un objeto implicito
-// 3. probar
-/*
-function getUsuarioActivo(nombre) {
-    return {
-        uid: 'ABC123',
-        username: nombre
-    }
-}
-*/
-
-const getUsuarioActivo = (nombre) => ({
-    uid: 'ABC123',
-    username: nombre
-});
-const usuarioActivo = getUsuarioActivo('Fernando');
-console.log(usuarioActivo);
+console.log(nombreClave, anios, lat, lng);
