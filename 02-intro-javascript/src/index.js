@@ -1,62 +1,43 @@
-// Desestructuracion o asignacion desestructurante
-//https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-
-const persona = {
-    nombre: 'Tony',
-    edad:45,
-    clave: 'Ironman',
-    rango: 'Soldado'
-}
-const persona2 = {
-    nombre: 'Peter',
-    edad:15,
-    clave: 'Spiderman'
-}
-
+const personajes = ['Goku', 'Vegeta', 'Trunks'];
 /*
-para evitar esto se puede desestructurar el objeto
-console.log(persona.nombre);
-console.log(persona.edad);
-console.log(persona.clave);
+console.log(personajes[0]);
+console.log(personajes[1]);
+console.log(personajes[2]);
+para evitar esto podemos desestructurar el array
+*/
+/*
+const [ p1 ] = personajes;
+console.log(p1);
+// asi obtengo 'Goku'
+*/
+/*
+const [ ,p2 ] = personajes;
+console.log(p2);
+// asi obtengo 'Vegeta'
+*/
+/*
+const [ ,,p3 ] = personajes;
+console.log(p3);
+// asi obtengo 'Trunks'
 */
 
-// esto quiere decir, obtener el campo nombre del 
-// objeto persona y asignarlo a la variable nombre
 /*
-const { nombre } = persona;
-console.log(nombre)
-*/
-// si tuviesemos otra variable o quisiesemos renombrar
-// el campo desestructurado se hace de esta manera:
-/*
-const { nombre:nombre2, edad, clave } = persona;
-console.log(nombre2, edad, clave);
-*/
-
-// algo que se usa mucho es la desestructuracion
-// directamente en el argumento de la funcion
-// se pueden establecer valores por defecto si no estan
-// definidos en el objeto
-/*
-const retornaPersona = ( { clave, nombre, rango = 'Capitan'} ) => {
-    console.log(nombre, rango);    
+const retornaArreglo = () => {
+    return ['ABC', 123];
 }
-retornaPersona(persona);
-retornaPersona(persona2);
+const [letras,numeros] = retornaArreglo();
+console.log(letras,numeros);
 */
 
-//Tarea
-const getPersona = ( { clave, edad, nombre, rango = 'Capitan'} ) => {
-    return {
-        nombreClave: clave,
-        anios: edad,
-        latlng: {
-            lat: 14.1232,
-            lng: -12.3232
-        }
-    }
+// Tarea 
+// 1. El primer valor del arr se llamara nombre
+// 2. el segundo valor se llamara setNombre
+const estado = (valor) => {
+    return [valor, () => { console.log('Hola Mundo')}];
 }
-// extraccion de propiedades dentro de objeto anidado
-const { nombreClave, anios, latlng: {lat, lng} } = getPersona(persona);
+const [nombre,setNombre] = estado('Goku');
+//console.log(arr);
+//arr[1](); // llamando una funcion declarada dentro del array
+console.log(nombre);
+setNombre();
 
-console.log(nombreClave, anios, lat, lng);
