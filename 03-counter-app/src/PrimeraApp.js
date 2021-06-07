@@ -1,5 +1,6 @@
 //import React, { Fragment } from "react";
 import React from "react";
+import PropTypes from 'prop-types';
 
 //const PrimeraApp = ( props ) => {
     // usualmente se desestructura props con la variable que se va a utilizar
@@ -8,6 +9,10 @@ const PrimeraApp = ( {saludo} ) => {
     // const saludo = {
     //     nombre: 'Fernando',
     //     edad: 34
+    // }
+    // if(!saludo)
+    // {
+    //     throw new Error('El saludo es necesario');
     // }
     return ( 
     //<Fragment>
@@ -21,6 +26,9 @@ const PrimeraApp = ( {saludo} ) => {
     //</Fragment>
     )
     
+}
+PrimeraApp.propTypes = {
+    saludo: PropTypes.string.isRequired
 }
 
 export default PrimeraApp;
