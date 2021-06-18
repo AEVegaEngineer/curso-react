@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
-const CounterApp = ( {valueDeIndex = 10} ) => {
+const CounterApp = ( {valueDeIndex = 100} ) => {
 
     const [counter , setCounter] = useState(valueDeIndex);
     // handleAdd
