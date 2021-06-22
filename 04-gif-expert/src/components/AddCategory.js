@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export const AddCategory = () => {
 
-    const [inputValue, setInputValue] = useState('Hola Mundo');
+export const AddCategory = ({setCategories}) => { // esto viene en props pero se desestructura directamente a setCategories
+
+    const [inputValue, setInputValue] = useState('');
     const handleInputChange = (e) => {
         //console.log(e.target.value);
         setInputValue(e.target.value);
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Submit hecho');
+
+        if( inputValue.trim().length > 2 )
+        {
+            setCategories( cats => [ ...cats, inputValue]); // se llama directamente el callback del estado anterior 'cats'            
+            //props.setCategories([...props.categories, inputValue]) // si se quisiese usar props, habria q obtener tambien las categorias
+            setInputValue('');
+        }
+        
     }
     return (
         <form onSubmit={handleSubmit}>
             <input type='text' value={inputValue} onChange={handleInputChange}/>
         </form>
     );
+}
+AddCategory.propTypes = {
+    setCategories: PropTypes.func.isRequired
 }
