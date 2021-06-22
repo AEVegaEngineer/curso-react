@@ -14,7 +14,7 @@ export const AddCategory = ({setCategories}) => { // esto viene en props pero se
 
         if( inputValue.trim().length > 2 )
         {
-            setCategories( cats => [ ...cats, inputValue]); // se llama directamente el callback del estado anterior 'cats'            
+            setCategories( cats => [ inputValue, ...cats]); // se llama directamente el callback del estado anterior 'cats'            
             //props.setCategories([...props.categories, inputValue]) // si se quisiese usar props, habria q obtener tambien las categorias
             setInputValue('');
         }
