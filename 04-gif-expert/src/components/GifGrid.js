@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 export const GifGrid = ({category}) => {
+    
+    //const [count, setCount] = useState(0);
+    
+    useEffect(() => {
+        getGifs();
+    }, [])
 
     const getGifs = async() => {
         const apiKey = 'Qj6x1V0usItOXxE668qY6ZPmujFklcmV';
@@ -22,7 +28,10 @@ export const GifGrid = ({category}) => {
         })
         console.log(gifs);
     }
-    getGifs();
+    //getGifs(); // esta funcion se va a ejecutar siempre que se cambie algun estado
+    // lo que quiere decir que si se establece un estado como setImagenes dentro de getGifs
+    // se generara un ciclo infinito
+
     return (
         <div>
             <h3>{category}</h3>
