@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { GifGridItem } from "./GifGridItem";
 
 export const GifGrid = ({category}) => {
     
-    //const [count, setCount] = useState(0);
-    
+    const [images, setImages] = useState([]);
+
     useEffect(() => {
         getGifs();
     }, [])
@@ -26,16 +27,25 @@ export const GifGrid = ({category}) => {
                 url: img.images?.downsized_medium.url // si vienen las imagenes utiliza downsized_medium.url
             }
         })
-        console.log(gifs);
+        //console.log(gifs);
+        setImages(gifs);
     }
     //getGifs(); // esta funcion se va a ejecutar siempre que se cambie algun estado
     // lo que quiere decir que si se establece un estado como setImagenes dentro de getGifs
     // se generara un ciclo infinito
 
     return (
-        <div>
+        <>
             <h3>{category}</h3>
-        </div>
+            <div className = "card-grid">
+                {
+                    images.map( img => {
+                        //return <GifGrid gif={gif} key={gif}/>
+                        return <GifGridItem key={img.id} {...img}/> // se desestructura la imagen y se envia como parametro al componente
+                    })
+                }
+            </div>
+        </>
     )
 }
 
