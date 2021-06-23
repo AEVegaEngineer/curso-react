@@ -3,6 +3,7 @@ import { useFetchGifs } from '../hooks/useFetchGifs';
 //import React, { useState, useEffect } from 'react';
 //import { getGifs } from '../helpers/getGifs';
 import { GifGridItem } from "./GifGridItem";
+//import 'animate.min.css';
 
 export const GifGrid = ({category}) => {
     

@@ -6,7 +6,7 @@ export const getGifs = async( category ) => {
     //console.log(url);
     const resp = await fetch( url );
     const {data} = await resp.json();
-    console.log(data);
+    //console.log(data);
     // mapea el objeto para sacar solo los elementos que queremos utilizar
     const gifs = data.map(img => {
         return {
