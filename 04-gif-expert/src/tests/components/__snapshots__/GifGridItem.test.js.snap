@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en <GifGridItem/> Debe de mostrar <GifGridItem/> correctamente 1`] = `
+<div
+  className="card animate__animated animate__fadeInDown"
+>
+  <img
+    alt="esto es un titulo"
+    src="http://localhost/titulo1"
+  />
+  <p>
+     
+    esto es un titulo
+     
+  </p>
+</div>
+`;

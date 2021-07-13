@@ -8,6 +8,7 @@ export const AddCategory = ({setCategories}) => { // esto viene en props pero se
     const handleInputChange = (e) => {
         //console.log(e.target.value);
         setInputValue(e.target.value);
+        //console.log("handle input change llamado");
     }
     const handleSubmit = (e) => {
         e.preventDefault();
