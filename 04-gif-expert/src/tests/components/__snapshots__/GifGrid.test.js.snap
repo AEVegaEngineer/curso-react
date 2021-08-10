@@ -13,21 +13,3 @@ exports[`Pruebas en <GifGrid/> Debe de mostrar <GifGrid/> correctamente 1`] = `
   />
 </Fragment>
 `;
-
-exports[`Pruebas en <GifGrid/> Debe de mostrar items cuando se cargan imagenes useFetchGifs 1`] = `
-<Fragment>
-  <h3>
-    Dragon ball z
-  </h3>
-  <div
-    className="card-grid"
-  >
-    <GifGridItem
-      id="ABC"
-      key="ABC"
-      title="Cualquier cosa"
-      url="https://localhost/cualquier/cosa"
-    />
-  </div>
-</Fragment>
-`;
