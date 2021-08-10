@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { AddCategory } from "./components/AddCategory";
 import { GifGrid } from "./components/GifGrid";
 
-const GifExpertApp = ( ) => {  
+const GifExpertApp = ({ defaultCategories = [] }) => {  
     
-    const [categories, setCategories] = useState(['One Punch']);
+    const [categories, setCategories] = useState(defaultCategories);
     /*
     const handleAdd = () => {   
         // se puede usar el operador spread para obtener los elementos que ya componen las categorias
