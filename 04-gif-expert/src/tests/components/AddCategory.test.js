@@ -31,7 +31,7 @@ describe('Pruebas en AddCategory', () => {
         
         // 1. simular el input change
         const input = wrapper.find('input');
-        const value = 'Hunter X Hunter';
+        const value = 'Hola mundo';
         input.simulate('change', { target : { value } });
 
         // 2. simular el submit
@@ -39,8 +39,10 @@ describe('Pruebas en AddCategory', () => {
 
         // 3. se debe de haber llamado el setCategories al menos 1 vez
         expect( setCategories ).toHaveBeenCalled();
+
         // 4. el valor del input debe estar ''        
         const inputValue = input.prop('value');    
         expect( inputValue ).toBe('');
+        
     });
 })
