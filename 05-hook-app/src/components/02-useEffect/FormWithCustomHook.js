@@ -1,47 +1,46 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect } from 'react'
+import { useForm } from '../../hooks/useForm';
 import './effects.css'
-import { Message } from './Message';
 
-export const SimpleForm = () => {
+export const FormWithCustomHook = () => {
     
     // if(true){
     //     const [state, setstate] = useState(initialState)
     // }
     // React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component
 
-    const [formState, setFormState] = useState({
+    const [formValues, handleInputChange] = useForm({
         name:'', 
-        email:''
+        email:'',
+        password:''
     });
 
-    const {name,email} = formState;
+    const {name,email,password} = formValues;
     // useEffect( () => {
     //     console.log("hey");
     // });
     // Asi como esta dice: No importa que cambie, vuelvete a ejecutar
 
-    useEffect( () => {
-        // console.log("el componente se cargo por primera vez!");
-    }, []);
+    
+    // const handleInputChange = ({target}) => {
+    //     setFormState({
+    //         ...formState,
+    //         [target.name] : target.value 
+    //     });
+    // }
 
-    useEffect( () => {
-        // console.log("formState Cambio");
-    }, [formState]);
-
-    useEffect( () => {
-        // console.log("email Cambio");
+    useEffect(() => {
+        console.log("email cambio");
     }, [email]);
 
-    const handleInputChange = ({target}) => {
-        setFormState({
-            ...formState,
-            [target.name] : target.value 
-        });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formValues)
     }
 
     return (
-        <>
-            <h1>useEffect</h1>
+        <form onSubmit={handleSubmit}>
+            <h1>FormWithCustomHook</h1>
             <hr/>
             <div className="form-group">
                 <input 
@@ -62,8 +61,19 @@ export const SimpleForm = () => {
                     value={email} 
                     onChange={handleInputChange}
                 ></input>
+                <input 
+                    type="password" 
+                    name="password" 
+                    className="form-control" 
+                    placeholder="***" 
+                    autoComplete="off" 
+                    value={password} 
+                    onChange={handleInputChange}
+                ></input>
             </div>
-            {(name === '123') && <Message/>}
-        </>
+            <button type="submit" className="btn btn-primary">
+                Guardar
+            </button>
+        </form>
     )
 }
