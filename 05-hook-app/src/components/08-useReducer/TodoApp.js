@@ -1,24 +1,49 @@
-import React, {useReducer} from 'react'
+import React, {useReducer, useEffect} from 'react'
 import { todoReducer } from './todoReducer';
 import './styles.css'
+import { useForm } from '../../hooks/useForm';
 
-const initialState = [{
-    id: new Date().getTime(),
-    desc: 'Aprender React',
-    done: false
-}];
+//const initialState = ;
+
+const init = () => {
+    // return [{
+    //     id: new Date().getTime(),
+    //     desc: 'Aprender React',
+    //     done: false
+    // }];
+
+    // localstorage puede devolver null, un JSON.parse de null retorna null, por lo que se valida
+    // si viene null, retorna un arreglo vacio, de lo contrario retorna los TODOS como arreglo
+    return JSON.parse(localStorage.getItem('todos')) || [];
+
+}
 
 export const TodoApp = () => {
 
-    const [ todos, dispatch ] = useReducer(todoReducer, initialState);
+    // el segundo parametro es el initialState, en este caso se manda como un arreglo vacio
+    // porque lo que sea que retorne init se convierte en el initialState
+    const [ todos, dispatch ] = useReducer(todoReducer, [], init);
+    
+    const [{description}, handleInputChange, reset] = useForm({
+        description: ''
+    });
 
-    //console.log(todos);
+    // se va a guardar en el local storage cuando el TODO cambie,
+    // como depende del TODO se puede usar un efecto
+    useEffect( () => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }, [todos]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if(description.trim().length <= 1){
+            return;
+        }
+        
         const newTodo = {
             id: new Date().getTime(),
-            desc: 'Nueva Tarea',
+            desc: description,
             done: false
         };
         const action = {
@@ -26,7 +51,7 @@ export const TodoApp = () => {
             payload: newTodo            
         }
         dispatch(action);
-
+        reset();
     }
 
     return (
@@ -61,6 +86,8 @@ export const TodoApp = () => {
                         className="form-control"
                         placeholder="Aprender ..."
                         autoComplete="off"
+                        value={description}
+                        onChange={handleInputChange}
                         />
                         <div className="d-grid gap-2">
                             <button

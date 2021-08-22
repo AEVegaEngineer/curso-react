@@ -1,6 +1,12 @@
 import { useState } from "react"
+
+// initialState es un selector o campo en el formulario que quiero manipular
 export const useForm = (initialState = {}) => {
     const [values, setValues] = useState(initialState);
+
+    const reset = () => {
+        setValues(initialState);
+    }
 
     const handleInputChange = ({target}) => {
         setValues({
@@ -9,5 +15,5 @@ export const useForm = (initialState = {}) => {
         });
     }
 
-    return [values, handleInputChange];
+    return [values, handleInputChange, reset];
 }
