@@ -12,7 +12,8 @@ export const MemoHook = () => {
     
     // pasar la funcion de proceso pesado como argumento al useMemo y el arreglo de dependencia
     // dicta que al actualizarse el estado del Counter debe volverse a memorizar el resultado
-    // de procesoPesado
+    // de procesoPesado, de esta manera, no se ejecuta el proceso pesado cada vez que se
+    // hace clic en show/hide
     const memoProcesoPesado = useMemo(() => procesoPesado(Counter), [Counter])
     return (
         <div>
