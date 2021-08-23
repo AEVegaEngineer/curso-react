@@ -2,6 +2,7 @@ import React, {useReducer, useEffect} from 'react'
 import { todoReducer } from './todoReducer';
 import './styles.css'
 import { useForm } from '../../hooks/useForm';
+import { TodoList } from './TodoList';
 
 //const initialState = ;
 
@@ -15,7 +16,6 @@ const init = () => {
     // localstorage puede devolver null, un JSON.parse de null retorna null, por lo que se valida
     // si viene null, retorna un arreglo vacio, de lo contrario retorna los TODOS como arreglo
     return JSON.parse(localStorage.getItem('todos')) || [];
-
 }
 
 export const TodoApp = () => {
@@ -75,29 +75,12 @@ export const TodoApp = () => {
             <hr/>
             <div className="row">
                 <div className="col-7">
-                    <ul className="list-group list-group-flush">
-                        {
-                            todos.map((todo, i) => (
-                            <li 
-                            key={todo.id}
-                            className="list-group-item"
-                            >
-                                <p 
-                                    // verificamos si la tarea fue completada (clic) entonces
-                                    // se le coloca la clase complete
-                                    className={`${todo.done && 'complete'}`}
-                                    onClick={() => {handleToggle(todo.id)}}
-                                >
-                                    {i+1}. {todo.desc}
-                                </p>
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={() => {handleDelete(todo.id)}}
-                                >Borrar</button>
-                            </li>
-                            ))
-                        }
-                    </ul>
+                    {/* TodoList, todos, handleDelete, handleToggle */}
+                    <TodoList 
+                        handleDelete={handleDelete} 
+                        handleToggle={handleToggle} 
+                        todos={todos}
+                    />
                 </div>
                 <div className="col-5">
                     <h4>Agregar TODO</h4>
