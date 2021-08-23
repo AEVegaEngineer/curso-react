@@ -1,16 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { AppRouter } from './AppRouter'
 import { UserContext } from './UserContext'
 
 
 export const MainApp = () => {
-    const user = {
-        id: 1234,
-        name: 'Andres',
-        email: 'aevega1991@gmail.com', 
-    }
+    const [user, setUser] = useState({
+        id:123
+    })
     return (
-        <UserContext.Provider value={user}>
+        <UserContext.Provider value={{
+            user,
+            setUser
+        }}>
             <AppRouter/>
         </UserContext.Provider>
         
