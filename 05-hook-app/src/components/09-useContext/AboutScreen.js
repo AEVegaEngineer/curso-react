@@ -20,6 +20,6 @@ export const AboutScreen = () => {
             >
             Logout
             </button>
-        </div>        
+        </div>
     )
 }
