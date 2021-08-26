@@ -4,7 +4,11 @@ describe('Pruebas en el hook useFetchGifs', () => {
     test('Debe de retornar el estado inicial', async() => {
         const {result, waitForNextUpdate} = renderHook(() => useFetchGifs('One Punch'));
         const {data,loading} = result.current;
-        await waitForNextUpdate({timeout:10000}); // se agrega un timeout para evitar que falle por conexion lenta
+        
+        // esto es para evitar llamar al setState en el hook cuando ya se habia desmontado
+        // tambien para evitar que falle por conexion lenta, ya no es necesario porque tenemos
+        // useref en el hook
+        await waitForNextUpdate({timeout:10000}); 
         expect(data).toEqual([]);
         expect(loading).toEqual(true);
     });
