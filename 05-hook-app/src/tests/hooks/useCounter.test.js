@@ -1,4 +1,4 @@
-import { renderHook, act } from "@testing-library/react-hooks"
+import { renderHook, act } from "@testing-library/react-hooks";
 import { useCounter } from "../../hooks/useCounter";
 describe('Pruebas en useCounter', () => {
   test('debe de retornar valores por defecto y verificar que los metodos de Counter sean funciones', () => {
