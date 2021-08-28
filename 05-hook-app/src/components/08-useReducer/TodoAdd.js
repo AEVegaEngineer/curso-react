@@ -8,6 +8,7 @@ export const TodoAdd = ({ handleAddTodo }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // el formulario no se debe de llamar si no hay una descripcion
         if(description.trim().length <= 1){
             return;
         }
