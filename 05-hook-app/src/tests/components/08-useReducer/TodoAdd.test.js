@@ -1,8 +1,6 @@
 import React from 'react';
-import { renderHook, act } from "@testing-library/react-hooks";
 import {shallow} from 'enzyme';
 import { TodoAdd } from '../../../components/08-useReducer/TodoAdd';
-import { useForm } from '../../../hooks/useForm';
 
 describe('Pruebas en <TodoAdd/>', () => {
   const handleAddTodo = jest.fn();
@@ -18,7 +16,7 @@ describe('Pruebas en <TodoAdd/>', () => {
   test('No debe de llamar handleAddTodo', () => {
     const formSubmit = wrapper.find('form').prop('onSubmit');
     formSubmit({preventDefault(){}});
-    expect( handleAddTodo ).not.toHaveBeenCalled();
+    expect( handleAddTodo ).toHaveBeenCalledTimes(0);
   });
 
   test('Debe de llamar la funcion handleAddTodo con un argumento', () => {  
