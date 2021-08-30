@@ -5,6 +5,7 @@ export const AboutScreen = () => {
     
     const {user, setUser} = useContext(UserContext);
     const handleLogout = () => {
+        console.log("logging out")
         setUser({});
     }
     return (
