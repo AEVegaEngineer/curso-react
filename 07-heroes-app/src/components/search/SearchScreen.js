@@ -1,22 +1,29 @@
 import React from 'react'
+import queryString from 'query-string'
+import { useLocation } from 'react-router-dom';
 import { heroes } from '../../data/heros'
 import { useForm } from '../../hooks/useForm';
 import { HeroCard } from '../heroes/HeroCard';
 
-export const SearchScreen = () => {
+export const SearchScreen = ({ history }) => {
+
+  const location = useLocation();
+  // {q = ''} cachea si viene undefined y retorna ''
+  const {q = ''} = queryString.parse(location.search)
+  console.log(q);
   
   const heroesFiltered = heroes;
 
- 
+  // si refresco el navegador, el valor de la caja de texto va a ser el que se recibe en la query del url
   const initialForm = {
-    search: ''
+    search: q
   }
   const [formValues, handleInputChange] = useForm(initialForm);
   const {search} = formValues;
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log(search);
+    history.push(`?q=${search}`);
   }  
 
   return (
