@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
 import { getHeroById } from '../../selectors/getHeroById';
 
 export const HeroScreen = ({history}) => {
   const {heroeId} = useParams();
-  const hero = getHeroById(heroeId);
+  // memoriza la data del heroe y solo la actualiza cuando el heroeId cambie
+  const hero = useMemo(() => getHeroById(heroeId), [heroeId])
+  //const hero = getHeroById(heroeId);
+
   // como se va a desestructurar al heroe, se necesita revisar si el heroe no es undefined,
   // esto es, el parametro de busqueda heroeId es erroneo, para que no retorne un error,
   // esta verificacion redirecciona a la pagina root (marvel)
