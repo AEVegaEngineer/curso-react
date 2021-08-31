@@ -8,7 +8,7 @@ export const HeroList = ({ publisher }) => {
 
   return (
     // <div className="card-columns">
-      <div class="card-group">
+      <div className="card-group">
       {
         
         heroes.map(hero => (

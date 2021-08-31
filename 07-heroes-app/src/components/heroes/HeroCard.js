@@ -10,7 +10,7 @@ export const HeroCard = ({
   characters
  }) => {
   return (
-    <div className="card" style={{maxWidth: 540, width:"18rem", minWidth:"18rem"}}>
+    <div className="card" style={{maxWidth: "18rem", width:"18rem", minWidth:"18rem"}}>
       <div className="row g-0">
         <div className="col-md-4">
           <img src={ `./assets/heroes/${ id }.jpg` } className="card-img" alt={superhero}/>
@@ -26,7 +26,7 @@ export const HeroCard = ({
             <p className="card-text">
               <small className="text-muted">{first_appearance}</small>
             </p>
-            <Link to={`./heroes/${id}`}>
+            <Link to={`./hero/${id}`}>
             More...
             </Link>
           </div>
