@@ -1,30 +1,31 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom';
-import { heroes } from '../../data/heros'
 import { useForm } from '../../hooks/useForm';
 import { HeroCard } from '../heroes/HeroCard';
+import { getHeroesByName } from '../../selectors/getHeroesByName';
 
 export const SearchScreen = ({ history }) => {
 
   const location = useLocation();
   // {q = ''} cachea si viene undefined y retorna ''
-  const {q = ''} = queryString.parse(location.search)
-  console.log(q);
+  const {q = ''} = queryString.parse(location.search);
   
-  const heroesFiltered = heroes;
-
+  
   // si refresco el navegador, el valor de la caja de texto va a ser el que se recibe en la query del url
   const initialForm = {
-    search: q
+    searchText: q
   }
   const [formValues, handleInputChange] = useForm(initialForm);
-  const {search} = formValues;
-
+  const {searchText} = formValues;
+  
   const handleSearch = (e) => {
     e.preventDefault();
-    history.push(`?q=${search}`);
+    history.push(`?q=${searchText}`);
   }  
+  
+  // useMemo para grabar los heroes filtrados y solo ejecutar getHeroes cuando se actualice la query
+  const heroesFiltered = useMemo(() => getHeroesByName(q), [q]);
 
   return (
     <div>
@@ -39,9 +40,9 @@ export const SearchScreen = ({ history }) => {
               type="text" 
               className="form-control" 
               placeholder="Find your hero" 
-              name="search" 
+              name="searchText" 
               autoComplete="off"
-              value={search}
+              value={searchText}
               onChange={handleInputChange}
             />
             <div className="d-grid gap-2">
@@ -57,6 +58,23 @@ export const SearchScreen = ({ history }) => {
         <div className="col-7">
           <h4>Results</h4>
           <hr/>
+            {
+              // si no se ha buscado nada
+              (q==='') && 
+              <div className="alert alert-info">
+                Search a Hero
+              </div>
+            }
+
+            {
+              // si no se han encontrado heroes con esa query
+              (q!=='' && heroesFiltered.length===0) &&  
+              <div className="alert alert-danger">
+                There is no hero named {q}
+              </div>
+            }
+
+
             {
               heroesFiltered.map(hero => (
                 <HeroCard key={hero.id} {...hero}/>
