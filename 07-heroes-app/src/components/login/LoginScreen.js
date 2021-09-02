@@ -13,15 +13,15 @@ export const LoginScreen = ({ history }) => {
   const {dispatch} = useContext(AuthContext);
   const handleLogin = () => {
     //history.push('/'); // redirecciona a la pagina de marvel
-    //(MarvelScreen)    
-    const actionLogin = {
+    //(MarvelScreen)   
+    dispatch({
       type: types.login,
       payload: {
         name:'Andres'
       }
-    }
-    dispatch(actionLogin);
-    history.replace('/'); // reemplaza el historial de busqueda anterior (login) por la ruta '/' 
+    });
+    const lastPath = localStorage.getItem('lastPath') || '/';
+    history.replace(lastPath); // reemplaza el historial de busqueda anterior (login) por la ruta '/' 
   }
   return (
     <div className="container mt-5">
