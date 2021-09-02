@@ -15,8 +15,15 @@ import { MainApp } from './components/09-useContext/MainApp';
 //import { Memorize } from './components/06-memos/Memorize';
 //import { SimpleForm } from './components/02-useEffect/SimpleForm';
 //import { HookApp } from './HookApp';
+const root = document.getElementById('root');
 
-ReactDOM.render(
-    <MainApp />,
-  document.getElementById('root')
-);
+function renderToDOM() {
+  if (root !== null) {
+    ReactDOM.render(
+      <MainApp />,
+      root
+    );
+  }
+}
+renderToDOM();
+export {renderToDOM};
