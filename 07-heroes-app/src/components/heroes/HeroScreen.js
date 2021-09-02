@@ -3,6 +3,7 @@ import { Redirect, useParams } from 'react-router-dom'
 import { getHeroById } from '../../selectors/getHeroById';
 
 export const HeroScreen = ({history}) => {
+  // extrae heroeId del parametro de la url
   const {heroeId} = useParams();
   // memoriza la data del heroe y solo la actualiza cuando el heroeId cambie
   const hero = useMemo(() => getHeroById(heroeId), [heroeId])
