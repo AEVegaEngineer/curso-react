@@ -9,6 +9,9 @@ describe('Pruebas en <PrivateRoute/>',() => {
       pathname: '/marvel'
     }
   }
+
+  Storage.prototype.setItem = jest.fn();
+
   test('debe de mostrar el componente si esta autenticado y guardar localStorage', () => {
     // cuando se tiene el tipo de estructura que tiene un higher order component, no se puede
     // usar shallow, ya que solo va a renderizar, en este caso, al MemoryRouter
@@ -22,8 +25,9 @@ describe('Pruebas en <PrivateRoute/>',() => {
           {...rest}
         />
       </MemoryRouter>
-    )
+    );
     expect(wrapper.find('span').exists()).toBe(true);
+    expect(localStorage.setItem).toHaveBeenCalledWith('lastPath',rest.location.pathname);
   });
   test('NO debe de mostrar el componente si NO esta autenticado', () => {
     const wrapper = mount(
@@ -34,7 +38,7 @@ describe('Pruebas en <PrivateRoute/>',() => {
           {...rest}
         />
       </MemoryRouter>
-    )
+    );
     expect(wrapper.find('span').exists()).toBe(false);
   });
   
