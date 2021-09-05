@@ -18,6 +18,7 @@ describe('Pruebas en <PrivateRoute/>',() => {
     const wrapper = mount(
       // el memory router es un higher order component hecho para hacer pruebas de router con ciertas rutas
       // por ejemplo PrivateRoute debe estar dentro de un router
+      // el error que muestra si no lo tiene dice, no se puede usar link fuera de un router
       <MemoryRouter>
         <PrivateRoute   
           isAuthenticated={true}
