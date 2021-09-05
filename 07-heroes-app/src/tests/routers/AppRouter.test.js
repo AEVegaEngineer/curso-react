@@ -39,7 +39,7 @@ describe('Pruebas en <AppRouter/>', () => {
     // si existe un navbar es xq esta autenticado
     expect(wrapper.find('.navbar').exists()).toBe(true);
 
-    console.log(wrapper.html())
+    console.log(wrapper.html());
   })
   
   

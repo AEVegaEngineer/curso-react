@@ -42,8 +42,5 @@ describe('Pruebas en <PrivateRoute/>',() => {
     );
     expect(wrapper.find('span').exists()).toBe(false);
     expect(localStorage.setItem).toHaveBeenCalledWith('lastPath',rest.location.pathname);
-  })
-  
-  
-  
+  });
 });
