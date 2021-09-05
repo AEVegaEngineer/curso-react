@@ -1,8 +1,8 @@
 import { mount } from "enzyme";
 import { MemoryRouter, Router } from "react-router";
-import { AuthContext } from "../../auth/AuthContext";
-import { Navbar } from "../../components/ui/NavBar";
-import { types } from "../../types/types";
+import { AuthContext } from "../../../auth/AuthContext";
+import { Navbar } from "../../../components/ui/NavBar";
+import { types } from "../../../types/types";
 
 describe('Pruebas en <Navbar/>', () => {
   // este history mock mockea la historia del navegador
@@ -50,8 +50,7 @@ describe('Pruebas en <Navbar/>', () => {
       type: types.logout
     });
     // revisa que luego de desloguear se enrute al usuario al login
-    expect(historyMock.replace).toHaveBeenCalled('/login');
-  });
-  
+    expect(historyMock.replace).toHaveBeenCalledWith('/login');
+  }); 
   
 });
