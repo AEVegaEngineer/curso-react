@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
+import { heroImages } from '../../helpers/heroImages';
 import { getHeroById } from '../../selectors/getHeroById';
 
 // import batman from '../../assets/heroes/dc-batman.jpg' // recurso estatico
@@ -7,7 +8,6 @@ import { getHeroById } from '../../selectors/getHeroById';
 // https://webpack.js.org/guides/dependency-management/#requirecontext
 // se usa para importar todos los elementos del folder, el segundo argumento es un
 // booleano que determina si se busca en subdirectorios
-const heroImages = require.context('../../assets/heroes', true);
 
 
 export const HeroScreen = ({history}) => {
