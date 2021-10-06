@@ -2,6 +2,14 @@ import React, { useMemo } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
 import { getHeroById } from '../../selectors/getHeroById';
 
+// import batman from '../../assets/heroes/dc-batman.jpg' // recurso estatico
+
+// https://webpack.js.org/guides/dependency-management/#requirecontext
+// se usa para importar todos los elementos del folder, el segundo argumento es un
+// booleano que determina si se busca en subdirectorios
+const heroImages = require.context('../../assets/heroes', true);
+
+
 export const HeroScreen = ({history}) => {
   // extrae heroeId del parametro de la url
   const {heroeId} = useParams();
@@ -37,8 +45,10 @@ export const HeroScreen = ({history}) => {
     <div className='row mt-5'>
       <div className='col-4'>
         <img 
-          src={`../assets/heroes/${heroeId}.jpg`}
-          alt='superhero'
+          // src={`../assets/heroes/${heroeId}.jpg`} //desde public/assets
+          // src={batman} // recurso estatico
+          src={heroImages(`./${heroeId}.jpg`).default}
+          alt={superhero}
           className='img-thumbnail animate__animated animate__fadeInLeft'
           />
       </div>
