@@ -21,9 +21,9 @@ export const LoginScreen = () => {
               <p className="btn-text">
                   <b>Sign in with google</b>
               </p>
-          </div>
-          <Link to="/auth/register">Create new account</Link>
+          </div>          
         </div>
+        <Link className="link" to="/auth/register">Create new account</Link>
       </form>
     </>
   )
