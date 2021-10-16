@@ -12,3 +12,42 @@
   justify-content: space-between;
   padding: 10px 20px 10px 20px;
 }
+
+.notes__content{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;  
+}
+
+.notes__title-input{
+  border:none;
+  &:focus{
+    outline:none;
+  }
+}
+
+.notes__title-input{
+  color: $dark-grey;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.notes__textarea{
+  // quitando bordes
+  border: none !important;
+  outline:0px !important;
+  -webkit-appearance:none;
+  box-shadow: none !important;
+
+  color: dark-grey;
+  font-size:20px;
+  flex: 1 1 auto; // que se pueda expandir lo mas posible
+  resize: none; // quitar el icono del resize en la esquina del textarea
+}
+
+.notes__image img{
+  box-shadow: 5px 5px $dark-grey;
+  height: 150px;
+}
