@@ -1,12 +1,14 @@
 import React from 'react'
-//import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
-import { useForm } from '../../hooks/useForm';
+import { useDispatch } from 'react-redux';
 import validator from 'validator'
+
+import { useForm } from '../../hooks/useForm';
+import { setError, removeError } from '../../actions/ui';
 
 export const RegisterScreen = () => {
 
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   
   const [formValues, handleInputChange] = useForm({
     name: 'Andres',
@@ -17,10 +19,13 @@ export const RegisterScreen = () => {
 
   const { name ,email, password, confirm } = formValues;
 
+  let errorList = [];
   const handleRegister = (e) => {
     e.preventDefault();
     if(isFormValid()){      
       console.log(name ,email, password, confirm);
+    } else {      
+      
     }
     //dispatch(startRegisterEmailPassword(email, password));
   }
@@ -32,21 +37,27 @@ export const RegisterScreen = () => {
   const isFormValid = () => {
     let errorOcurred = false;
     if(name.trim().length === 0){
-      console.log('name is required'); 
-      errorOcurred = true;     
+      errorList.push('name is required');
+      errorOcurred = true;
     }
     if(!validator.isEmail(email)){
-      console.log('email is not valid');
+      errorList.push('email is not valid');
       errorOcurred = true;
     }
     if(password !== confirm){
-      console.log('passwords do not match');
+      errorList.push('passwords do not match');
       errorOcurred = true;
     }
     if(password.length < 6){
-      console.log('password length must be at least 6 characters');
+      errorList.push('password length must be at least 6 characters');
       errorOcurred = true;
     }
+    if(errorOcurred){
+      dispatch(setError(errorList));
+      //console.log(errorList);
+    }else{
+      dispatch(removeError());
+    }    
     return !errorOcurred;
   }
 
@@ -56,7 +67,7 @@ export const RegisterScreen = () => {
       <form onSubmit={handleRegister}>
 
         <div className="auth__alert-error">
-          Ha ocurrido un error
+          Hola mundo
         </div>
 
         <input type="text" placeholder="Name" name="name" 
