@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import validator from 'validator'
 
 import { useForm } from '../../hooks/useForm';
@@ -9,6 +9,11 @@ import { setError, removeError } from '../../actions/ui';
 export const RegisterScreen = () => {
 
   const dispatch = useDispatch();
+
+  // con useSelector obtengo los estados guardados en el store, 
+  // desestructuro los mensajes de error para mostrarlos
+  const {msgError} = useSelector( state => state.ui);
+  
   
   const [formValues, handleInputChange] = useForm({
     name: 'Andres',
@@ -24,8 +29,6 @@ export const RegisterScreen = () => {
     e.preventDefault();
     if(isFormValid()){      
       console.log(name ,email, password, confirm);
-    } else {      
-      
     }
     //dispatch(startRegisterEmailPassword(email, password));
   }
@@ -65,10 +68,15 @@ export const RegisterScreen = () => {
     <>
       <h3 className="auth__tittle">Register</h3>
       <form onSubmit={handleRegister}>
-
-        <div className="auth__alert-error">
-          Hola mundo
-        </div>
+        {msgError && (
+          <div className="auth__alert-error">            
+            <ul>
+              {Array.isArray(msgError) && msgError.map(err=> (
+                <li key={err}>{err}</li>
+              ))}
+            </ul>            
+          </div>
+        )}
 
         <input type="text" placeholder="Name" name="name" 
           className="auth__input" 
