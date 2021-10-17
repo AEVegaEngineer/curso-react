@@ -1,10 +1,12 @@
 import { getAuth } from '@firebase/auth'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { login } from '../actions/auth'
 import { JournalScreen } from '../components/journal/JournalScreen'
 import { AuthRouter } from './AuthRouter'
+import { PrivateRoute } from './PrivateRoute'
+import { PublicRoute } from './PublicRoute'
 
 export const AppRouter = () => {
 
@@ -18,6 +20,8 @@ export const AppRouter = () => {
   // una respuesta del efecto, se setea checking en false y se
   // muestra la pagina.
   const [checking, setChecking] = useState(true);
+  
+  // estado simple para la proteccion de las rutas privadas
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
@@ -44,17 +48,19 @@ export const AppRouter = () => {
     <Router> 
       <div>
         <Switch>
-          <Route                       
-            path="/auth" 
+          <PublicRoute                       
+            path="/auth"
+            isAuthenticated={isLoggedIn} 
             component={AuthRouter}
           />   
-          <Route
+          <PrivateRoute
             exact             
             path="/" 
+            isAuthenticated={isLoggedIn} 
             component={JournalScreen}
           />
           {/* Cualquier otra ruta desconocida, redirige al /auth */}
-          <Redirect to="/auth"/>
+          <Redirect to="/auth/login"/>
         </Switch>
       </div>     
       
