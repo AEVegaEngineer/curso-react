@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import { getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { googleAuthProvider } from "../firebase/firebase-config";
 import { types } from "../types/types"
@@ -14,10 +15,21 @@ export const startLoginEmailPassword = (email, password) => {
         dispatch( login(user.user.uid, user.user.displayName) );
         dispatch(finishLoading());
       }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('Error code: ' + errorCode + '. Message: ' + errorMessage);
+        let errMsg = '';
+        switch (error.code) {
+          case 'auth/user-not-found':
+            errMsg = 'There is no user record corresponding to this email. If the email is verified, the user might have been deleted.';
+            break; 
+          case 'auth/wrong-password':
+            errMsg = 'Wrong email or password.';
+            break;        
+          default:
+            errMsg = error.code+' System failure, try again later.';
+            break;
+        }
         dispatch(finishLoading());
+        
+        Swal.fire('Error', errMsg, 'error');
       });
   }
 }
@@ -30,10 +42,8 @@ export const startRegisterWithEmailPasswordName = ( email, password, name) => {
         await updateProfile(auth.currentUser,{ displayName: name });
         console.log(user)
         // dispatch(login(user.uid, user.displayName))
-      }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log('Error code: ' + errorCode + '. Message: ' + errorMessage);
+      }).catch((error) => {        
+        Swal.fire('Error', error.message, 'error');
       });
   }
 }
