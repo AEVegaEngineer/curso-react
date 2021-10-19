@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import {db} from '../firebase/firebase-config'
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 import { types } from '../types/types';
@@ -48,6 +49,23 @@ export const inAppSaveNote = (note) => {
     delete noteToFirestore.id
     //console.log(`${uid}/journal/notes/${note.id}`)
     const noteRef = doc(db, `${uid}/journal/notes/${note.id}`)
-    await updateDoc(noteRef,noteToFirestore);
+    try {
+      await updateDoc(noteRef,noteToFirestore);
+      dispatch(refreshNote(note.id, noteToFirestore));
+    } catch (error) {
+      console.log(error);
+    }    
+    Swal.fire('Saved', note.title, 'success')
   }
 }
+
+export const refreshNote = ( id, note ) => ({
+  type: types.notesUpdated,
+  payload: {
+    id, 
+    note: {
+      id, 
+      ...note
+    }
+  }
+})
