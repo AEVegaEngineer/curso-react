@@ -59,7 +59,7 @@ export const NoteScreen = () => {
         {
           (note.url) &&
           <div className="notes__image">
-            <img alt="Cielo" src="https://play-lh.googleusercontent.com/3-AOeSSoqN3IK750gMz4FwOJw0MnIT-_dSA2Ujs9MzcS5bMaV9bwTBwH2udoEmBsBKY"/>
+            <img alt="Cielo" src={note.url}/>
           </div>
         }
       </div>
