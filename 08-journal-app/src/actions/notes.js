@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2'
 import {db} from '../firebase/firebase-config'
-import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { types } from '../types/types';
 import { loadNotes } from '../helpers/loadNotes';
 import { fileUpload } from '../helpers/fileUpload';
@@ -93,3 +93,17 @@ export const startUploading = (file) => {
 
   }
 }
+
+// todas las tareas asincronas se hacen con thunk
+export const startDeleting = (id) => {
+  return async (dispatch, getState) => {
+    const {uid} = getState().auth;
+    await deleteDoc(doc(db, `${uid}/journal/notes/${id}`));
+    dispatch(deleteNote(id));
+  }
+}
+
+export const deleteNote = (id) => ({
+  type: types.notesDeleted,
+  payload: id
+})
