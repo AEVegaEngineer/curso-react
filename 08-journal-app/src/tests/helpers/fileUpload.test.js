@@ -1,4 +1,12 @@
+import cloudinary from 'cloudinary';
 import { fileUpload } from "../../helpers/fileUpload";
+
+cloudinary.config({ 
+  cloud_name: 'bhp-global', 
+  api_key: '891677519143134', 
+  api_secret: 'FrKAkHCs1Nj6mDXmekl2x2V1ROE',
+  secure: true
+});
 
 describe('Pruebas en fileUpload', () => {
   test('Debe de cargar un archivo y returnar el url', async() => {
@@ -8,6 +16,14 @@ describe('Pruebas en fileUpload', () => {
 
     const url = await fileUpload(file);
     expect( typeof url ).toBe('string');
+
+    // borrar imagen por ID
+    const segments = url.split('/');
+    const imageId = segments[segments.length - 1].replace('.png','');    
+
+    cloudinary.v2.api.delete_resources(imageId, {}, () => {
+      
+    });
   });
   test('Debe de retornar un error', async() => {    
     const file = new File([], 'foto.png');
