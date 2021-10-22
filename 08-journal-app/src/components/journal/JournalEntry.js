@@ -10,9 +10,9 @@ export const JournalEntry = ({id, date, title, body, url}) => {
     //console.log(id)
     dispatch(activeNote(id, { date, title, body, url }));
   }
-
+  
   return (
-    <div className="journal__entry pointer" onClick={handleEntryClick}>
+    <div className="journal__entry pointer animate__animated animate__fadeIn animate__faster" onClick={handleEntryClick}>
       {
         url &&
         <div 
