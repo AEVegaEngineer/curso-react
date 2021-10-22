@@ -3,6 +3,7 @@ import { getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEma
 import { googleAuthProvider } from "../firebase/firebase-config";
 import { types } from "../types/types"
 import { finishLoading, startLoading } from './ui';
+import { noteLogout } from './notes';
 
 const auth = getAuth();
 
@@ -70,6 +71,8 @@ export const startLogout = () => {
   return async(dispatch) => {
     await getAuth().signOut();
     dispatch(logout());
+    // limpia las notas al hacer logout
+    dispatch(noteLogout());
   }
 }
 

@@ -14,13 +14,21 @@ export const notesReducer = (state=initialState, action) => {
           ...action.payload
         }
       }
+    case types.notesAddNew:
+      return { 
+        ...state,
+        notes: [
+          ...state.notes, action.payload
+        ]
+      }
     case types.notesLoad:
-      //console.log(action.payload)
       return { 
         ...state,
         notes: [...action.payload]
       }
     case types.notesUpdated:
+      //state.notes.map( note => note.id === action.payload.id && state.notes.push(note) )
+
       return { 
         ...state,
         notes: state.notes.map(
@@ -29,12 +37,19 @@ export const notesReducer = (state=initialState, action) => {
             : note
         )
       }
-    case types.notesDeleted:
+    case types.notesDelete:
       return {
         ...state,
         active: null,
         // regresa todas las notas excepto la que borre, (action.payload)
         notes: state.notes.filter( note => note.id !== action.payload )
+      }
+    case types.notesLogoutCleaning: 
+      return {
+        ...state,
+        active: null,
+        // limpia todas las notas al hacer logout
+        notes: []
       }
     default:
       return state;

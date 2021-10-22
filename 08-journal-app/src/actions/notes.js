@@ -8,6 +8,7 @@ import { fileUpload } from '../helpers/fileUpload';
 export const startNewNote = () => {
   return async(dispatch, getState) => {
     const {uid} = getState().auth;
+    const {notes} = getState().notes;
     const newNote = {
       title: '',
       body: '',
@@ -15,7 +16,12 @@ export const startNewNote = () => {
     }
     const docRef = await addDoc(collection(db, `${ uid }`, "journal/notes"), newNote);
     //console.log("Document written with ID: ", docRef);
-    dispatch (activeNote(docRef.id, newNote))
+    const nueva= {...newNote}
+    nueva.id = docRef.id;
+    //dispatch(setNotes([...notes,nueva]));
+    dispatch(activeNote(docRef.id, newNote));
+    dispatch(addNewNote(docRef.id, newNote));
+    
   }
 }
 
@@ -27,9 +33,18 @@ export const activeNote = (id, note) => ({
   }
 })
 
+export const addNewNote = (id, note) => ({
+  type: types.notesAddNew,
+  payload: { 
+    id,
+    ...note
+  }
+})
+
 export const startLoadingNotes = (uid) => {
   return async(dispatch) => {
     const notes = await loadNotes(uid);
+    //console.log(notes)
     dispatch(setNotes(notes));
   }
 }
@@ -41,15 +56,15 @@ export const setNotes = (notes) => ({
 
 export const inAppSaveNote = (note) => {
   return async (dispatch, getState) => {
+    
     const {uid} = getState().auth;
     if(!note.url){
       delete note.url;
-    }
-
+    }    
     const noteToFirestore = {...note}
     delete noteToFirestore.id
     //console.log(`${uid}/journal/notes/${note.id}`)
-    const noteRef = doc(db, `${uid}/journal/notes/${note.id}`)
+    const noteRef = doc(db, `${uid}/journal/notes/${note.id}`)    
     try {
       await updateDoc(noteRef,noteToFirestore);
       dispatch(refreshNote(note.id, noteToFirestore));
@@ -60,7 +75,9 @@ export const inAppSaveNote = (note) => {
   }
 }
 
-export const refreshNote = ( id, note ) => ({
+export const refreshNote = ( id, note ) => {
+  console.log(note);
+  return {  
   type: types.notesUpdated,
   payload: {
     id, 
@@ -69,7 +86,7 @@ export const refreshNote = ( id, note ) => ({
       ...note
     }
   }
-});
+}};
 
 export const startUploading = (file) => {
   return async(dispatch, getState) => {
@@ -104,6 +121,10 @@ export const startDeleting = (id) => {
 }
 
 export const deleteNote = (id) => ({
-  type: types.notesDeleted,
+  type: types.notesDelete,
   payload: id
-})
+});
+
+export const noteLogout = () => ({
+  type: types.notesLogoutCleaning
+});
