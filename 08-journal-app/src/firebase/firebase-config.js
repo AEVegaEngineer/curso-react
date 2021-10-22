@@ -20,12 +20,25 @@ const firebaseConfig = {
   appId: "1:131183975887:web:971e79ebc1f94485ae06ba",
   measurementId: "G-Y98HHQ3N8Q"
 };
-
-
-
+const firebaseConfigTesting = {
+  apiKey: "AIzaSyDPpw6ie_OfhbC3Q4-f7wEuIGmZ-_i5qEc",
+  authDomain: "pruebas-ac663.firebaseapp.com",
+  projectId: "pruebas-ac663",
+  storageBucket: "pruebas-ac663.appspot.com",
+  messagingSenderId: "468640814262",
+  appId: "1:468640814262:web:6f82afc3eb3822bbe00217"
+};
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+if (process.env.NODE_ENV === 'test') {
+  //testing 
+  initializeApp(firebaseConfigTesting);
+} else {
+  //dev / prod
+  initializeApp(firebaseConfig);
+}
+
+
  
 //const analytics = firebase.getAnalytics(app);
 
