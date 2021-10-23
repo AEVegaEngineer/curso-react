@@ -14,13 +14,21 @@ export const startNewNote = () => {
       body: '',
       date: new Date().getTime()
     }
-    const docRef = await addDoc(collection(db, `${ uid }`, "journal/notes"), newNote);
-    //console.log("Document written with ID: ", docRef);
-    const nueva= {...newNote}
-    nueva.id = docRef.id;
-    //dispatch(setNotes([...notes,nueva]));
-    dispatch(activeNote(docRef.id, newNote));
-    dispatch(addNewNote(docRef.id, newNote));
+
+    try {
+
+      const docRef = await addDoc(collection(db, `${ uid }`, "journal/notes"), newNote);
+      //console.log("Document written with ID: ", docRef);
+      const nueva= {...newNote}
+      nueva.id = docRef.id;
+      //dispatch(setNotes([...notes,nueva]));
+      dispatch(activeNote(docRef.id, newNote));
+      dispatch(addNewNote(docRef.id, newNote));
+      
+    } catch (error) {
+      console.log(error)
+    }
+
     
   }
 }

@@ -8,14 +8,17 @@ export const fileUpload = async (file) => {
       method: 'POST',
       body: formData
     })
+    //console.log(resp)
     if( resp.ok ) {
       const cloudResp = await resp.json();
+      //console.log("resp(json)")
+      //console.log(cloudResp)
       return cloudResp.secure_url;
     } else {
       //throw await resp.json();
       return null;
     }
   } catch (error) {
-    console.log(error)
+    console.log("Error en fileUpload: ",error)
   }
 }

@@ -4,9 +4,13 @@
 import { deleteDoc, doc, getDoc } from '@firebase/firestore';
 import configureStore from 'redux-mock-store' 
 import thunk from 'redux-thunk'
-import { inAppSaveNote, startLoadingNotes, startNewNote } from '../../actions/notes';
+import { inAppSaveNote, startLoadingNotes, startNewNote, startUploading } from '../../actions/notes';
 import { db } from '../../firebase/firebase-config';
 import { types } from '../../types/types';
+
+// necesario para que funcione el fileUpload
+import * as fs from 'fs';
+import { fileUpload } from '../../helpers/fileUpload';
 
 // aqui deben ir todos los middlewares, en este caso thunk porque se usa para tareas asincronas
 const middlewares = [thunk];
@@ -18,10 +22,22 @@ const mockStore = configureStore(middlewares);
 const initState = {
   auth: {
     uid: 'TESTING',
+  },
+  notes: {
+    active: {
+      id: '2OMCoSEIeYLmA3XLRXKA',
+      title: 'Hola',
+      body: 'Mundo'
+    }
   }
 };
 
 let store = mockStore(initState);
+
+// necesario para que funcione el fileUpload
+jest.mock('../../helpers/fileUpload', () => ({
+  fileUpload: jest.fn()
+}))
 
 /*
   Estas pruebas son distintas ya que las acciones retornan una funcion asincrona,
@@ -105,5 +121,17 @@ describe('Pruebas con las acciones de notes', () => {
     const docSnap = await getDoc(noteRef);
     //console.log(docSnap.data())
     expect(docSnap.data().title).toBe( note.title );
+  });
+
+  test('startUploading debe de actualizar el url de la imagen', async() => {
+    fileUpload.mockReturnValue('https://hola-mundo.com')
+    fs.writeFileSync('foto.jpg', '')
+    const file = fs.readFileSync('foto.jpg')
+    await store.dispatch(startUploading(file));
+
+    const noteRef = doc(db, `${initState.auth.uid}/journal/notes/${initState.notes.active.id}`);
+    const docSnap = await getDoc(noteRef);
+    //console.log(docSnap.data())
+    expect(docSnap.data().url).toBe('https://hola-mundo.com')
   });
 });
