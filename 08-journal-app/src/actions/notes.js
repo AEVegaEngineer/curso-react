@@ -76,7 +76,7 @@ export const inAppSaveNote = (note) => {
 }
 
 export const refreshNote = ( id, note ) => {
-  console.log(note);
+  //console.log(note);
   return {  
   type: types.notesUpdated,
   payload: {
