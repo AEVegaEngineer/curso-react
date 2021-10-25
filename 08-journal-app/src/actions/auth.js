@@ -8,6 +8,7 @@ import { noteLogout } from './notes';
 const auth = getAuth();
 
 export const startLoginEmailPassword = (email, password) => {
+  //console.log('entro a startLoginEmailPassword')
   return (dispatch) => {
     dispatch(startLoading());
     return signInWithEmailAndPassword( auth, email, password )
