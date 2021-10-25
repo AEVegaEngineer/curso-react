@@ -10,7 +10,7 @@ const auth = getAuth();
 export const startLoginEmailPassword = (email, password) => {
   return (dispatch) => {
     dispatch(startLoading());
-    signInWithEmailAndPassword( auth, email, password )
+    return signInWithEmailAndPassword( auth, email, password )
       .then(async(user) => {
         //await console.log(user);
         dispatch( login(user.user.uid, user.user.displayName) );
@@ -25,11 +25,10 @@ export const startLoginEmailPassword = (email, password) => {
             errMsg = 'Wrong email or password.';
             break;        
           default:
-            errMsg = error.code+' System failure, try again later.';
+            errMsg = `System failure, try again later. Error code: ${error.code}`;
             break;
-        }
+        }        
         dispatch(finishLoading());
-        
         Swal.fire('Error', errMsg, 'error');
       });
   }
