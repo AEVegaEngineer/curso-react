@@ -80,7 +80,7 @@ export const RegisterScreen = () => {
           value={name}
           onChange={handleInputChange}
         />
-        <input type="text" placeholder="Email" name="email" 
+        <input type="email" placeholder="Email" name="email" 
           className="auth__input"
           value={email}
           onChange={handleInputChange}
