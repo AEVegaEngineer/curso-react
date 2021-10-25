@@ -13,15 +13,6 @@ import { AppRouter } from '../../routers/AppRouter';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { login } from '../../actions/auth';
 
-import Swal from 'sweetalert2'
-
-// como sweetalert2 tiene exportacion por defecto (sin llaves)
-// no es necesario mockear Swal, sino directamente el metodo
-// que se esta llamando (fire)
-jest.mock('sweetalert2', () => ({
-  fire: jest.fn(),
-}));
-
 jest.mock('../../actions/auth', () => ({
   login: jest.fn(),
 }));
