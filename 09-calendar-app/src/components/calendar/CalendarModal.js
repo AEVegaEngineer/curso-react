@@ -5,7 +5,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventAddNew, eventClearActiveEvent, eventUpdated } from '../../actions/events';
+import { eventAddNew, eventClearActive, eventUpdated } from '../../actions/events';
 
 const customStyles = {
   content: {
@@ -38,8 +38,8 @@ export const CalendarModal = () => {
   const {modalOpen: isModalOpen} = useSelector(state => state.ui)
   const {activeEvent} = useSelector(state => state.calendar)
 
-  const [dateStart, setDateStart] = useState(now.toDate());
-  const [dateEnd, setDateEnd] = useState(nowPlusOne.toDate());
+  // const [dateStart, setDateStart] = useState(now.toDate());
+  // const [dateEnd, setDateEnd] = useState(nowPlusOne.toDate());
   const [titleValid, setTitleValid] = useState(true);
 
   const [formValues, setFormValues] = useState(initEvent);
@@ -50,6 +50,10 @@ export const CalendarModal = () => {
     // se necesita el if porque al refrescar la pagina activeEvent es null y no se puede asignar a un estado
     if(activeEvent){
       setFormValues(activeEvent);
+    } else {
+      // cuando se borra un evento es necesario restablecer el formulario
+      // porque continua almacenando los campos del evento borrado
+      setFormValues(initEvent);
     }
   }, [activeEvent]);
 
@@ -63,12 +67,12 @@ export const CalendarModal = () => {
   const closeModal = () => {    
     //console.log('cerrar modal');
     dispatch(uiCloseModal());
-    dispatch(eventClearActiveEvent());
+    dispatch(eventClearActive());
     setFormValues(initEvent);
   }
 
   const handleStartDateChange = (e) => {
-    setDateStart(e)
+    //setDateStart(e)
     setFormValues({
       ...formValues,
       start: e
@@ -76,7 +80,7 @@ export const CalendarModal = () => {
   }
 
   const handleEndDateChange = (e) => {
-    setDateEnd(e)
+    //setDateEnd(e)
     setFormValues({
       ...formValues,
       end: e
@@ -131,7 +135,7 @@ export const CalendarModal = () => {
         overlayClassName="modal-fondo"
         closeTimeoutMS={200}
       >
-      <h1> Nuevo evento </h1>
+      <h1> {activeEvent ? 'Editar evento' : 'Nuevo evento'} </h1>
       <hr />
       <form 
         name="myform" 
@@ -145,7 +149,8 @@ export const CalendarModal = () => {
               <DateTimePicker
                 name="dateStart"
                 onChange={handleStartDateChange}
-                value={dateStart}
+                value={start}
+                // value={dateStart}
                 className="form-control"
               />
           </div>
@@ -155,8 +160,9 @@ export const CalendarModal = () => {
               <DateTimePicker
                 name="dateEnd"
                 onChange={handleEndDateChange}
-                value={dateEnd}
-                minDate={dateStart}
+                value={end}
+                // value={dateEnd}
+                minDate={start}
                 className="form-control"
               />
           </div>
