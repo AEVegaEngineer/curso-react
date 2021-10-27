@@ -7,34 +7,20 @@ import { Navbar } from '../ui/Navbar'
 import { messages } from '../../helpers/calendar-messages-es'
 import { CalendarEvent } from './CalendarEvent'
 import { CalendarModal } from './CalendarModal'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import 'moment/locale/es';
 import { uiOpenModal } from '../../actions/ui'
 import { eventSetActive } from '../../actions/events'
 import { AddNewFab } from '../ui/AddNewFab'
 moment.locale('es');
-
-
-
-const localizer = momentLocalizer(moment)
-const myEventsList = [{
-  title: 'Cumple del jefe',
-  start: moment().toDate(),// new Date()
-  end: moment().add(2, 'hours').toDate(),
-  bgcolor: '#fafafa',
-  notes: 'comprar el pastel',
-  user: {
-    _id: '123',
-    name: 'Fernando',
-  }
-}];
-
-
+const localizer = momentLocalizer(moment);
 
 export const CalendarScreen = () => {
 
   const dispatch = useDispatch();
+
+  const { events } = useSelector(state => state.calendar);
   
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month');
 
@@ -71,7 +57,7 @@ export const CalendarScreen = () => {
       <Navbar/>
       <Calendar
         localizer={localizer}
-        events={myEventsList}
+        events={events}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500 }}
