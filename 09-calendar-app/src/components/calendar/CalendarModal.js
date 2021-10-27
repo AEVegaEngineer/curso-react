@@ -5,6 +5,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
+import { eventAddNew } from '../../actions/events';
 
 const customStyles = {
   content: {
@@ -75,7 +76,7 @@ export const CalendarModal = () => {
     //console.log(formValues);
     const momentStart = moment(start);
     const momentEnd = moment(end);
-    console.log(momentStart, momentEnd)
+    //console.log(momentStart, momentEnd)
     
     if( momentStart.isSameOrAfter(momentEnd)){
       //console.log('Fecha 2 debe ser mayor')      
@@ -85,6 +86,15 @@ export const CalendarModal = () => {
       setTitleValid(false);
     }
     //TODO realizar grabacion en base de datos
+    //console.log(formValues);
+    dispatch(eventAddNew({
+      ...formValues,
+      id: new Date().getTime(),
+      user: {
+        _id: '123',
+        name: 'Fernando'
+      }
+    }));
     setTitleValid(true);
     closeModal();
     

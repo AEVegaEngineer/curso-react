@@ -51,10 +51,9 @@ export const CalendarScreen = () => {
   const onViewChange = (e) => {
     setLastView(e);
     localStorage.setItem('lastView', e);
-  }  
+  }
 
-  const eventStyleGetter = (event, start, end, isSelected) => {
-    
+  const eventStyleGetter = (event, start, end, isSelected) => {    
     const style = {
       backgroundColor: '#367CF7',
       borderRadius: '0px',
@@ -66,6 +65,7 @@ export const CalendarScreen = () => {
       style
     }
   }
+  
   return (
     <div className="calendar-screen">
       <Navbar/>
