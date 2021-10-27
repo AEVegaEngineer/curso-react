@@ -7,9 +7,12 @@ import { Navbar } from '../ui/Navbar'
 import { messages } from '../../helpers/calendar-messages-es'
 import { CalendarEvent } from './CalendarEvent'
 import { CalendarModal } from './CalendarModal'
+import { useDispatch } from 'react-redux';
 
 import 'moment/locale/es';
+import { uiOpenModal } from '../../actions/ui'
 moment.locale('es');
+
 
 
 const localizer = momentLocalizer(moment)
@@ -29,14 +32,17 @@ const myEventsList = [{
 
 export const CalendarScreen = () => {
 
+  const dispatch = useDispatch();
+  
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month');
 
   const onDoubleClick = (e) => {
-    console.log(e)
+    //console.log("abrir modal")
+    dispatch(uiOpenModal());
   }
 
   const onSelect = (e) => {
-    console.log(e)
+    //console.log(e)
   }
 
   const onViewChange = (e) => {
