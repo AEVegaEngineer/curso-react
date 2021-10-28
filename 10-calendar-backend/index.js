@@ -1,7 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv')
 dotenv.config();
-console.log(process.env);
+// variables de entorno
+//console.log(process.env);
 
 const app = express();
 
@@ -10,12 +11,12 @@ app.use( express.static('public') );
 
 
 // Rutas
-app.get('/', (req, res) => {
-  console.log('se requiere el /');
-  res.json({
-    ok: true
-  })
-});
+// lo que './routes/auth' vaya a exportar lo va a habilitar en '/api/auth'
+app.use('/api/auth', require('./routes/auth'));
+
+// TODO: auth // crear, login, renew
+// TODO: CRUD: Eventos
+
 
 //Escuchar peticiones
 app.listen( process.env.PORT, () => {
