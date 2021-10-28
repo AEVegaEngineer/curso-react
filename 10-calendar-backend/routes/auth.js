@@ -5,11 +5,13 @@
 const { Router } = require('express');
 const router = Router();
 
-router.get('/', (req, res) => {
-  console.log('se requiere el /');
-  res.json({
-    ok: true
-  })
-});
+const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth')
+
+router.post('/new', crearUsuario);
+
+router.post('/', loginUsuario);
+
+router.get('/renew', revalidarToken);
+
 
 module.exports = router;
