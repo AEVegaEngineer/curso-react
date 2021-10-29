@@ -40,6 +40,7 @@ const crearUsuario = async(req, res = response) => {
     });  
     
   } catch (error) {
+    console.log("************* Error registrando usuario *************");
     console.log(error)
     res.status(500).json({
       ok: false,
@@ -85,18 +86,23 @@ const loginUsuario = async(req, res = response) => {
     }); 
 
   } catch (error) {
+    console.log("************* Error iniciando sesion *************");
     console.log(error)
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
       msg: 'Ha ocurrido un error en el registro'
     })
   }
 }
-const revalidarToken = (req, res = response) => {  
-  res.json({
+const revalidarToken = async(req, res = response) => {  
+  const uid = req.uid;
+  const name = req.name;
+  const token = await generarJWT(uid, name);
+  return res.header('X-Authorization', token).json({
     ok: true, 
-    msg: 'renew'
-  })
+    status: 'Token revalidado en el header'/*,
+    token*/
+  });  
 }
 
 module.exports = {
