@@ -6,7 +6,8 @@ const { Router } = require('express');
 const router = Router();
 const { check } = require('express-validator')
 
-const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth')
+const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth');
+const { validarCampos } = require('../middlewares/validar-campos');
 
 router.post(
   '/new',
@@ -16,6 +17,7 @@ router.post(
     check('email', 'El email tiene un formato erroneo').isEmail(),
     check('password', 'El password es obligatorio').not().isEmpty(),
     check('password', 'El password tener al menos 6 caracteres').isLength({ min: 6 }),
+    validarCampos // esto debe ir al final
   ] , // arreglo de middlewares
   crearUsuario
 );
@@ -27,6 +29,7 @@ router.post(
     check('email', 'El email tiene un formato erroneo').isEmail(),
     check('password', 'El password es obligatorio').not().isEmpty(),
     check('password', 'El password tener al menos 6 caracteres').isLength({ min: 6 }),
+    validarCampos // esto debe ir al final
   ] , // arreglo de middlewares
   loginUsuario
 );
