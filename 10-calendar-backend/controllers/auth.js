@@ -1,5 +1,5 @@
 const { response } = require('express');
-const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
 
 
@@ -20,6 +20,12 @@ const crearUsuario = async(req, res = response) => {
       })
     }
     usuario = new Usuario(req.body);
+    // Encriptar contrasena
+    // para usar bcrypt se necesita un salt, que es un numero usado para el encriptado
+    // entre mas vueltas que se den para generar el salt, mas seguro pero mas procesamiento se consume
+    const salt = bcrypt.genSaltSync(); // por defecto tiene 10 vueltas
+    usuario.password = bcrypt.hashSync(password,salt);
+
     await usuario.save();
     return res.status(201).json({
       ok: true, 
