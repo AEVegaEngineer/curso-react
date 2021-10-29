@@ -1,10 +1,14 @@
 const express = require('express');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
+const { dbConnection } = require('./database/config');
 dotenv.config();
 // variables de entorno
 //console.log(process.env);
 
 const app = express();
+
+//Base de datos
+dbConnection();
 
 // Directorio publico
 app.use( express.static('public') );
