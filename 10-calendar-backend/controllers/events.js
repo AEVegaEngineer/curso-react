@@ -4,9 +4,10 @@ const Evento = require('../models/Evento');
 const { longDateFormat } = require('../helpers/dateFormat');
 
 const getEventos = async(req, res = response) => {  
+  const eventos = await Evento.find().populate('user','name');
   return res.status(200).json({
     ok: true,
-    msg: 'getEventos'
+    eventos
   }); 
 }
 
