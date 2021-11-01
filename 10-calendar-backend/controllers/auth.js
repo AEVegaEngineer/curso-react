@@ -12,10 +12,10 @@ const crearUsuario = async(req, res = response) => {
   try {
     // OJO, esto debe tener await, sino siempre devuelve la misma response
     // y es el equivalente a que cualquier usuario ya se encuentre registrado
-    let usuario = await Usuario.findOne({email: email});
-    console.log('********* Guardado nuevo usuario. '+longDateFormat(Date.now())+' *********');
-    console.log(usuario)
+    let usuario = await Usuario.findOne({email: email});    
     if( usuario ){
+      console.log('********* Error en crearUsuario. Ya existe un usuario con el mismo correo electrónico. '+longDateFormat(Date.now())+' *********');
+      console.log(email)
       return res.status(400).json({
         ok:false,
         msg: 'Ya existe un usuario con el mismo correo electrónico'
@@ -32,7 +32,8 @@ const crearUsuario = async(req, res = response) => {
 
     // Genera nuestro JWT
     const token = await generarJWT(usuario.id, usuario.name);
-
+    console.log('********* Guardado nuevo usuario. '+longDateFormat(Date.now())+' *********');
+    console.log(usuario)
     return res.status(201).json({
       ok: true, 
       uid: usuario.id, 
@@ -78,7 +79,9 @@ const loginUsuario = async(req, res = response) => {
 
     // Genera nuestro JWT
     const token = await generarJWT(usuario.id, usuario.name);
-
+    console.log('********* Iniciando sesion. '+longDateFormat(Date.now())+' *********');
+    console.log('Id del usuario: '+usuario.id);
+    console.log('Nombre del usuario: '+usuario.name);    
     return res.status(200).json({
       ok: true, 
       uid: usuario.id, 
