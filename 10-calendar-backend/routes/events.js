@@ -30,6 +30,7 @@ router.post(
     check('start', 'Fecha de inicio debe tener formato de fecha').custom( isDate ), 
     check('end', 'Fecha de finalizacion es obligatoria').not().isEmpty(),
     check('end', 'Fecha de finalizacion debe tener formato de fecha').custom( isDate ),    
+    //check('user', 'El usuario es obligatorio').not().isEmpty(),   
     validarCampos // esto debe ir al final OBLIGATORIO PARA MOSTRAR LOS ERRORES
   ],
   crearEvento

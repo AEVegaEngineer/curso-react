@@ -2,6 +2,7 @@ const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
 const { generarJWT } = require('../helpers/jwt');
+const { longDateFormat } = require('../helpers/dateFormat');
 
 
 const crearUsuario = async(req, res = response) => {  
@@ -12,8 +13,8 @@ const crearUsuario = async(req, res = response) => {
     // OJO, esto debe tener await, sino siempre devuelve la misma response
     // y es el equivalente a que cualquier usuario ya se encuentre registrado
     let usuario = await Usuario.findOne({email: email});
-    // console.log('*************************************')
-    // console.log(usuario)
+    console.log('********* Guardado nuevo usuario. '+longDateFormat(Date.now())+' *********');
+    console.log(usuario)
     if( usuario ){
       return res.status(400).json({
         ok:false,
@@ -40,7 +41,7 @@ const crearUsuario = async(req, res = response) => {
     });  
     
   } catch (error) {
-    console.log("************* Error registrando usuario *************");
+    console.log('********* Error guardado nuevo usuario. '+longDateFormat(Date.now())+' *********');
     console.log(error)
     res.status(500).json({
       ok: false,
@@ -58,7 +59,7 @@ const loginUsuario = async(req, res = response) => {
     let usuario = await Usuario.findOne({email: email});
     
     if( !usuario ){
-      console.log('not valid email')
+      console.log('********* Error en login. Correo electronico incorrecto. '+longDateFormat(Date.now())+' *********');
       return res.status(400).json({
         ok:false,
         msg: 'Correo electronico incorrecto'
@@ -68,10 +69,10 @@ const loginUsuario = async(req, res = response) => {
     const validPassword = bcrypt.compareSync( password, usuario.password );
     
     if(! validPassword ){
-      console.log('not valid password')
+      console.log('********* Error en login. Contraseña incorrecta. '+longDateFormat(Date.now())+' *********');
       return res.status(400).json({
         ok:false,
-        msg: 'contraseña incorrectos'
+        msg: 'contraseña incorrecta'
       });;
     }
 
@@ -86,7 +87,7 @@ const loginUsuario = async(req, res = response) => {
     }); 
 
   } catch (error) {
-    console.log("************* Error iniciando sesion *************");
+    console.log('********* Error en loginUsuario. '+longDateFormat(Date.now())+' *********');
     console.log(error)
     return res.status(500).json({
       ok: false,
@@ -98,6 +99,7 @@ const revalidarToken = async(req, res = response) => {
   const uid = req.uid;
   const name = req.name;
   const token = await generarJWT(uid, name);
+  console.log('********* Revalidando token. '+longDateFormat(Date.now())+' *********');
   return res.header('X-Authorization', token).json({
     ok: true, 
     status: 'Token revalidado en el header'/*,
