@@ -18,7 +18,7 @@ router.post(
     check('email', 'El email tiene un formato erroneo').isEmail(),
     check('password', 'El password es obligatorio').not().isEmpty(),
     check('password', 'El password tener al menos 6 caracteres').isLength({ min: 6 }),
-    validarCampos // esto debe ir al final
+    validarCampos // esto debe ir al final OBLIGATORIO PARA MOSTRAR LOS ERRORES
   ] , // arreglo de middlewares
   crearUsuario
 );
