@@ -14,4 +14,26 @@ const fetchSinToken = ( endpoint, data, method = 'GET' ) => {
   }
 }
 
-export { fetchSinToken }
+const fetchConToken = ( endpoint, data, method = 'GET' ) => {
+  const url = `${ baseUrl }/${endpoint}`;
+  const token = localStorage.getItem('token') || '';
+  if ( method === 'GET' ) {
+    return fetch(url, {
+      method,
+      headers: {
+        'X-Authorization': token
+      }
+    });
+  } else {
+    return fetch(url, {
+      method,
+      headers: {
+        'Content-type': 'application/json',
+        'X-Authorization': token
+      },
+      body: JSON.stringify( data )
+    });
+  }
+}
+
+export { fetchSinToken, fetchConToken }
