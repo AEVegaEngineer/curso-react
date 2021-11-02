@@ -105,8 +105,10 @@ const revalidarToken = async(req, res = response) => {
   console.log('********* Revalidando token. '+longDateFormat(Date.now())+' *********');
   return res.header('X-Authorization', token).json({
     ok: true, 
-    status: 'Token revalidado en el header'/*,
-    token*/
+    msg: 'Token revalidado',
+    token,
+    uid,
+    name
   });  
 }
 
