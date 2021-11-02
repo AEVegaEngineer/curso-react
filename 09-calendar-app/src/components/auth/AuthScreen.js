@@ -21,7 +21,6 @@ export const AuthScreen = () => {
         e.preventDefault();
         //console.log(formLoginValues);
         dispatch( startLogin( lEmail, lPassword ) );
-        
     }
 
     return (

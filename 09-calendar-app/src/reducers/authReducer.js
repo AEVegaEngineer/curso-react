@@ -3,16 +3,17 @@ import { types } from "../types/types";
 
 const initialState = {
   checking: true,
-  email: null,
-  password: null,
+  // email: null,
+  // password: null,
 }
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.login:
+    case types.authLogin:
       return {
-        email: action.payload.uid,
-        password: action.payload.displayName,
+        ...state,
+        checking: false,
+        ...action.payload
       }    
     default:
       return state;
