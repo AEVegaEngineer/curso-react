@@ -63,7 +63,7 @@ const loginUsuario = async(req, res = response) => {
       console.log('********* Error en login. Correo electronico incorrecto. '+longDateFormat(Date.now())+' *********');
       return res.status(400).json({
         ok:false,
-        msg: 'Correo electronico incorrecto'
+        msg: 'Usuario o contraseña incorrecta'
       });
     }
     // Confirmar los passwords
@@ -73,7 +73,7 @@ const loginUsuario = async(req, res = response) => {
       console.log('********* Error en login. Contraseña incorrecta. '+longDateFormat(Date.now())+' *********');
       return res.status(400).json({
         ok:false,
-        msg: 'contraseña incorrecta'
+        msg: 'Usuario o contraseña incorrecta'
       });;
     }
 
