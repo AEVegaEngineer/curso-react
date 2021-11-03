@@ -24,6 +24,8 @@ export const eventStartAddNew = (event) => {
         }
         //console.log(event)
         dispatch(eventAddNew(event))
+      } else {        
+        Swal.fire('Error', (body.msg !== undefined) ? body.msg : body.errors.title.msg, 'error');
       }
     } catch (error) {
       console.log(error)
@@ -49,13 +51,13 @@ export const eventClearActive = () => ({
 export const eventStartUpdate = (event) => {
   return async(dispatch) => {
     try {
-      console.log(event);
+      //console.log(event);
       const resp = await fetchConToken(`events/${event.id}`, event, 'PUT');
       const body = await resp.json();
       if( body.ok ){
         dispatch(eventUpdated(event));
-      } else {
-        Swal.fire('Error', body.msg, 'error');
+      } else {        
+        Swal.fire('Error', (body.msg !== undefined) ? body.msg : body.errors.title.msg, 'error');
       }
     } catch (error) {
       console.log(error);
@@ -67,6 +69,25 @@ const eventUpdated = (event) => ({
   type: types.eventUpdated,
   payload: event
 });
+
+export const eventStartDelete = (event) => {
+  return async(dispatch, getState) => {
+    const { id } = getState().calendar.activeEvent;
+    //console.log(id)
+    try {
+      console.log(event);
+      const resp = await fetchConToken(`events/${id}`, {}, 'DELETE');
+      const body = await resp.json();
+      if( body.ok ){
+        dispatch(eventDeleted());
+      } else {        
+        Swal.fire('Error', (body.msg !== undefined) ? body.msg : body.errors.title.msg, 'error');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
 
 export const eventDeleted = () => ({
   type: types.eventDeleted,
