@@ -1,6 +1,7 @@
 import { fetchConToken } from "../helpers/fetch";
 import { convertDateStrToDateObj } from "../helpers/convertDateStrToDateObj";
 import { types } from "../types/types";
+import Swal from "sweetalert2";
 
 
 export const eventStartAddNew = (event) => {
@@ -45,7 +46,24 @@ export const eventClearActive = () => ({
   type: types.eventClearActive,
 });
 
-export const eventUpdated = (event) => ({
+export const eventStartUpdate = (event) => {
+  return async(dispatch) => {
+    try {
+      console.log(event);
+      const resp = await fetchConToken(`events/${event.id}`, event, 'PUT');
+      const body = await resp.json();
+      if( body.ok ){
+        dispatch(eventUpdated(event));
+      } else {
+        Swal.fire('Error', body.msg, 'error');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+const eventUpdated = (event) => ({
   type: types.eventUpdated,
   payload: event
 });

@@ -5,7 +5,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventStartAddNew, eventClearActive, eventUpdated } from '../../actions/events';
+import { eventStartAddNew, eventClearActive, eventStartUpdate } from '../../actions/events';
 
 const customStyles = {
   content: {
@@ -106,7 +106,7 @@ export const CalendarModal = () => {
 
     if(activeEvent){
       // actualiza nota
-      dispatch( eventUpdated( formValues ) );
+      dispatch( eventStartUpdate( formValues ) );
     } else {
       // crea nueva nota
       dispatch(eventStartAddNew(formValues));
