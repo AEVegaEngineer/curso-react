@@ -1,21 +1,20 @@
-import moment from "moment";
 import { types } from "../types/types";
 
+// {
+//   id: new Date().getTime(),
+//   title: 'Cumple del jefe',
+//   start: moment().toDate(),// new Date()
+//   end: moment().add(2, 'hours').toDate(),
+//   bgcolor: '#fafafa',
+//   notes: 'comprar el pastel',
+//   user: {
+//     _id: '123',
+//     name: 'Fernando',
+//   }
+// }
+
 const initialState = { 
-  events: [
-    {
-      id: new Date().getTime(),
-      title: 'Cumple del jefe',
-      start: moment().toDate(),// new Date()
-      end: moment().add(2, 'hours').toDate(),
-      bgcolor: '#fafafa',
-      notes: 'comprar el pastel',
-      user: {
-        _id: '123',
-        name: 'Fernando',
-      }
-    }
-  ],
+  events: [ ],
   activeEvent: null
 };
 
@@ -54,6 +53,12 @@ export const calendarReducer = (state = initialState, action) => {
         ),
         // restablece el activeEvent luego de eliminar ese evento
         activeEvent:null
+      }
+
+    case types.eventLoaded:
+      return {
+        ...state,
+        events: [...action.payload]
       }
     default:
       return state;
