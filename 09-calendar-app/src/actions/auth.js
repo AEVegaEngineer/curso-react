@@ -1,6 +1,7 @@
 import { fetchConToken, fetchSinToken } from "../helpers/fetch"
 import { types } from "../types/types";
 import Swal from 'sweetalert2'
+import { eventClearLogout } from "./events";
 
 export const startLogin = (email, password) => {
   // es asincrono asi que necesita este return
@@ -72,6 +73,7 @@ const login = (user) => ({
 export const startLogout = () => {
   return (dispatch) => {
     localStorage.clear();
+    dispatch(eventClearLogout());
     dispatch(logout());
   }
 }

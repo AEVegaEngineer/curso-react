@@ -37,6 +37,12 @@ export const calendarReducer = (state = initialState, action) => {
         ...state,
         activeEvent: null
       }
+    case types.eventUnloaded:
+      return{
+        ...state,
+        events: [],
+        activeEvent: null
+      }
     case types.eventUpdated:
       return{
         ...state,

@@ -23,6 +23,7 @@ export const authReducer = (state = initialState, action) => {
     case types.authLogout:
       return {
         // no se toma el resto del estado porque se supone que en el action se borro el estado del localstorage
+        
         checking: false
       }
     default:
