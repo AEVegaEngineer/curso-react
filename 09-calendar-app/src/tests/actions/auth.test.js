@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import Swal from 'sweetalert2';
 import '@testing-library/jest-dom';
 
-import { startLogin, startRegister } from '../../actions/auth';
+import { startChecking, startLogin, startRegister } from '../../actions/auth';
 import { types } from '../../types/types';
 import * as fetchModule from '../../helpers/fetch';
 
@@ -15,6 +15,8 @@ let store = mockStore(initState);
 
 //mock del local storage
 Storage.prototype.setItem = jest.fn();
+
+let token = '';
 
 describe('Pruebas en las acciones Auth', () => {
   beforeEach(() => {
@@ -38,7 +40,7 @@ describe('Pruebas en las acciones Auth', () => {
 
     // Extraer argumentos de las llamadas realizadas a mi funcion mock localStorage.setItem
     // calls es un array, si se hace console.log se pueden ver los argumentos
-    //const token = localStorage.setItem.mock.calls[0][1];
+    token = localStorage.setItem.mock.calls[0][1];
     //console.log(token)
   });
 
@@ -83,4 +85,35 @@ describe('Pruebas en las acciones Auth', () => {
     expect( localStorage.setItem ).toHaveBeenCalledWith('token', 'ABC123ABC123');
     expect( localStorage.setItem ).toHaveBeenCalledWith('token-init-date', expect.any(Number));
   });
-})
+  
+  test('startChecking correcto', async() => {
+    // para hacer esta prueba es necesario mockear la funcion de fetchConToken
+    // ya que al hacer el mockeo del setItem, se hace el reemplazo de la funcion
+    // a nivel global, ya que se esta pasando por referencia.
+    // Otra manera de hacerla es separar estas pruebas que necesitan el setItem sin modificar
+    // a un archivo de test independiente
+    fetchModule.fetchConToken = jest.fn(() => ({
+      json() {
+        return{
+          ok: true,
+          uid: '123',
+          name: 'carlos',
+          token: 'ABC123ABC123'
+        }
+      }
+    }));
+    await store.dispatch( startChecking());
+    let actions = store.getActions();
+    localStorage.setItem('token', token);
+    expect(actions[0]).toEqual({
+      type: types.authLogin,
+      payload: {
+        uid: '123',
+        name: 'carlos',
+      }
+    });
+    expect(localStorage.setItem).toHaveBeenCalledWith('token','ABC123ABC123');
+
+  });
+
+});
