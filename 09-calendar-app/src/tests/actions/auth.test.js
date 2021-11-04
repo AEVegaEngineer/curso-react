@@ -1,9 +1,12 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import '@testing-library/jest-dom';
-import { startLogin } from '../../actions/auth';
-import { types } from '../../types/types';
 import Swal from 'sweetalert2';
+import '@testing-library/jest-dom';
+
+import { startLogin, startRegister } from '../../actions/auth';
+import { types } from '../../types/types';
+import * as fetchModule from '../../helpers/fetch';
+
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -50,5 +53,34 @@ describe('Pruebas en las acciones Auth', () => {
     await store.dispatch( startLogin('fernando2@gmail.com', '123456'));
     actions = store.getActions();
     expect( Swal.fire ).toHaveBeenCalledWith("Error", "Usuario o contraseña incorrecta", "error");
+  });
+
+  test('startRegister correcto', async() => {
+    // se mockea fetchSinToken unicamente para este test, los demas tests tienen el original
+    // esto para evitar generar un registro de usuario, si no se quisiera hacer este mock,
+    // se tendria que crear un metodo interno para limpiar el registro creado en el test (borrar usuario)
+    fetchModule.fetchSinToken = jest.fn(() => ({
+      json() {
+        return{
+          ok: true,
+          uid: '123',
+          name: 'carlos',
+          token: 'ABC123ABC123'
+        }
+      }
+    }));
+
+    await store.dispatch( startRegister('test@test.com', '123456', 'test'));
+    let actions = store.getActions();
+    //console.log(actions);
+    expect( actions[0] ).toEqual({
+      type: types.authLogin,
+      payload: {
+        uid: '123',
+        name: 'carlos'
+      }
+    });
+    expect( localStorage.setItem ).toHaveBeenCalledWith('token', 'ABC123ABC123');
+    expect( localStorage.setItem ).toHaveBeenCalledWith('token-init-date', expect.any(Number));
   });
 })
