@@ -11,16 +11,16 @@ export const AuthScreen = () => {
     const dispatch = useDispatch();
 
     const initialLoginForm = {
-        lEmail: 'fernando@gmail.com',
-        lPassword: '123456',
+        lEmail: '',
+        lPassword: '',
     };
     const [ formLoginValues, handleLoginInputChange ] = useForm(initialLoginForm);
 
     const initialRegisterForm = {
-        rName: 'fernando',
-        rEmail: 'fernando@gmail.com',
-        rPassword1: '123456',
-        rPassword2: '123456',
+        rName: '',
+        rEmail: '',
+        rPassword1: '',
+        rPassword2: '',
     };
     const [ formRegisterValues, handleRegisterInputChange ] = useForm(initialRegisterForm);
 
