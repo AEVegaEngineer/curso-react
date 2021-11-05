@@ -6,6 +6,11 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import '@testing-library/jest-dom';
 import { DeleteEventFab } from '../../../components/ui/DeleteEventFab';
+import { eventStartDelete } from '../../../actions/events';
+
+jest.mock('../../../actions/events', () => ({
+  eventStartDelete: jest.fn()
+}));
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -25,5 +30,16 @@ const wrapper = mount(
 describe('Pruebas en <DeleteEventFab/>', () => {
   test('Debe de mostrarse correctamente', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+
+  test('Debe de llamar el eventStartDelete al hacer el click', () => {
+    wrapper.find('button').prop('onClick')();
+    // se podria llamar de esta manera pero es ambiguo ya que si alguien cambia
+    // por error eventStartDelete que se le pasa al dispatch por un login, por ejemplo,
+    // la prueba seguiria dando correcta pero habria un error logico.
+    //expect(store.dispatch).toHaveBeenCalledWith(expect.any(Function));
+    // para estos casos es mejor mockear la funcion interna de la accion
+    expect(eventStartDelete).toHaveBeenCalled();
+    
   });
 });
