@@ -132,6 +132,14 @@ export const CalendarModal = () => {
         className="modal"
         overlayClassName="modal-fondo"
         closeTimeoutMS={200}
+        /*
+        Al hacer pruebas de la apertura del modal, se arroja el siguiente error:
+        Warning: react-modal: App element is not defined. Please use `Modal.setAppElement(el)` 
+        or set `appElement={el}`. This is needed so screen readers don't see main content when 
+        modal is opened. It is not recommended, but you can opt-out by setting `ariaHideApp={false}`.
+        Se agrega:
+        */    
+        ariaHideApp={!process.env.NODE_ENV === 'test'}    
       >
       <h1> {activeEvent ? 'Editar evento' : 'Nuevo evento'} </h1>
       <hr />

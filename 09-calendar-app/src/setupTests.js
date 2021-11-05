@@ -15,3 +15,7 @@ jest.mock('sweetalert2', () => ({
 }));
 // Cuando una lib externa llame sus metodos en las pruebas y arroje errores,
 // se puede mockear sus metodos de esta misma manera
+
+// para las pruebas del modal, se debe mockear el getContext ya que en
+// entorno de pruebas no existe un dom del cual extraerlo.
+HTMLCanvasElement.prototype.getContext = () => {}
