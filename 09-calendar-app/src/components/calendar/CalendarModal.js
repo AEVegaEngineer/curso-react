@@ -19,7 +19,12 @@ const customStyles = {
 };
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement('#root');
+// Si estoy ejecutando pruebas, no se debe ejecutar esto ya que fallan los tests al no tener un '#root'
+if(process.env.NODE_ENV !== 'test') {
+  Modal.setAppElement('#root');
+}
+
+
 
 const now = moment().minutes(0).seconds(0).add(1, 'hour');
 const nowPlusOne = now.clone().add(1,'hour');

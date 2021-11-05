@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en <AppRouter/> Se debe mostrar correctamente 1`] = `
+<h5>
+  Espere...
+</h5>
+`;
