@@ -5,8 +5,8 @@ import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import '@testing-library/jest-dom';
-import { AuthScreen } from '../../../../components/auth/AuthScreen';
-import { startLogin, startRegister } from '../../../../actions/auth';
+import { AuthScreen } from '../../../components/auth/AuthScreen';
+import { startLogin, startRegister } from '../../../actions/auth';
 import Swal from 'sweetalert2';
 
 
