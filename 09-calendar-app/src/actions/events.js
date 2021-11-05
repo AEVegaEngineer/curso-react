@@ -24,7 +24,8 @@ export const eventStartAddNew = (event) => {
         }
         //console.log(event)
         dispatch(eventAddNew(event))
-      } else {        
+      } else {       
+        console.log('aqui esta') 
         Swal.fire('Error', (body.msg !== undefined) ? body.msg : body.errors.title.msg, 'error');
       }
     } catch (error) {

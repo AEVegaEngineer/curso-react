@@ -30,7 +30,7 @@ const now = moment().minutes(0).seconds(0).add(1, 'hour');
 const nowPlusOne = now.clone().add(1,'hour');
 
 const initEvent = {
-  title: 'Evento',
+  title: '',
   notes: '',
   start: now.toDate(),
   end: nowPlusOne.toDate(),
@@ -105,22 +105,20 @@ export const CalendarModal = () => {
     }
     if( title.trim().length < 2){
       setTitleValid(false);
-    }
-    //TODO realizar grabacion en base de datos
-    //console.log(formValues);
-
-    if(activeEvent){
-      // actualiza nota
-      dispatch( eventStartUpdate( formValues ) );
     } else {
-      // crea nueva nota
-      dispatch(eventStartAddNew(formValues));
+      // si el evento esta establecido como activo es porque ya estaba registrado
+      // por lo que seria una actualizacion, sino seria un registro
+      if(activeEvent){
+        // actualiza nota
+        dispatch( eventStartUpdate( formValues ) );
+      } else {
+        // crea nueva nota
+        dispatch(eventStartAddNew(formValues));
+      }      
+      //console.log(formValues);
+      setTitleValid(true);
+      closeModal();
     }
-
-    
-    setTitleValid(true);
-    closeModal();
-    
   }
 
   return (
